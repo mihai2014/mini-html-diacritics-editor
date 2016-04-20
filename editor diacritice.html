@@ -1,0 +1,213 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="keywords" content="diacritice, editor, html">
+
+<style>
+#howto{
+    border:1px solid black;
+    //height:100px;
+    margin-bottom:4px;
+    float:left;
+}
+#monitor{
+    border:1px double black;
+    height:1.5em;
+    margin-bottom:4px;
+}
+textarea{
+    //width: 100%;
+    float:left;
+    margin-left:5px;
+}
+#info1{
+    float:left;
+    width: 200px;
+}
+#info2{
+    float:left;
+    width: 200px;
+}
+.col1{
+    display: inline-block;
+    width:4em;
+}
+.col2{
+    display: inline-block;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h2 class="u">Mini html editor cu diacritice</h3>
+
+<section id="howto">
+<div id="Alt+A"  class="col1">Alt+A</div> <div class="col2">=> Ă</div><br> 
+<div id="Alt+a"  class="col1">Alt+a</div> <div class="col2">=> ă</div><br> 
+<div id="Ctrl+A" class="col1">Ctrl+A</div><div class="col2">=> Â</div><br>  
+<div id="Ctrl+a" class="col1">Ctrl+a</div><div class="col2">=> â</div><br>  
+<div id="Alt+I"  class="col1">Alt+I</div> <div class="col2">=> Î</div><br>  
+<div id="Alt+i"  class="col1">Alt+i</div> <div class="col2">=> î</div><br>  
+<div id="Alt+S"  class="col1">Alt+S</div> <div class="col2">=> Ș</div><br>  
+<div id="Alt+s"  class="col1">Alt+s</div> <div class="col2">=> ș</div><br>    
+<div id="Alt+T"  class="col1">Alt+T</div> <div class="col2">=> Ț</div><br>  
+<div id="Alt+t"  class="col1">Alt+t</div> <div class="col2">=> ț</div><br> 
+</section>
+
+<textarea id="text" rows="12" cols="50">
+Introduce-ti textul aici ...
+</textarea> 
+
+<input type="hidden" id="flag" value="1">
+
+</body>
+
+<script>
+var alt_a = document.getElementById("Alt+A");  
+var alt_A = document.getElementById("Alt+a"); 
+var ctrl_A = document.getElementById("Ctrl+A"); 
+var ctrl_a = document.getElementById("Ctrl+a"); 
+var alt_I = document.getElementById("Alt+I"); 
+var alt_i = document.getElementById("Alt+i");  
+var alt_S = document.getElementById("Alt+S");  
+var alt_s = document.getElementById("Alt+s");  
+var alt_T = document.getElementById("Alt+T");  
+var alt_t = document.getElementById("Alt+t");  
+
+function reset(){
+    function back(){
+        alt_a.style.backgroundColor = "white";
+        alt_A.style.backgroundColor = "white";
+        ctrl_A.style.backgroundColor = "white";
+        ctrl_a.style.backgroundColor = "white";
+        alt_I.style.backgroundColor = "white";
+        alt_i.style.backgroundColor = "white";
+        alt_S.style.backgroundColor = "white";
+        alt_s.style.backgroundColor = "white";
+        alt_T.style.backgroundColor = "white";
+        alt_t.style.backgroundColor = "white";
+    }
+    var timeout = setTimeout(back, 300);
+}
+
+
+var flag = document.getElementById("flag");
+var text = document.getElementById("text");
+var info1 = document.getElementById("info1");
+var info2 = document.getElementById("info2");
+
+text.onfocus = function(){
+    if(flag.value == "1"){
+        //text.innerHTML = "";
+	text.value = ""
+	flag.value = "0";
+    }
+}
+
+text.onkeypress = KeyCheck1;
+
+function action(ch){
+    switch(ch) {
+        case 'a'.charCodeAt(0):
+            alt_a.style.backgroundColor = "red";
+	    text.value += "ă";
+            break;
+        case 'A'.charCodeAt(0):
+            alt_A.style.backgroundColor = "red";
+	    text.value += "Ă";
+            break;
+        case 'i'.charCodeAt(0):
+            alt_i.style.backgroundColor = "red";
+	    text.value += "î";
+            break;
+        case 'I'.charCodeAt(0):
+            alt_I.style.backgroundColor = "red";
+	    text.value += "Î";
+            break;
+        case 's'.charCodeAt(0):
+            alt_s.style.backgroundColor = "red";
+	    text.value += "ș";
+            break;
+        case 'S'.charCodeAt(0):
+            alt_S.style.backgroundColor = "red";
+	    text.value += "Ș";
+            break;
+        case 't'.charCodeAt(0):
+            alt_t.style.backgroundColor = "red";
+	    text.value += "ț";
+            break;
+        case 'T'.charCodeAt(0):
+            alt_T.style.backgroundColor = "red";
+	    text.value += "Ț";
+            break;
+	    
+        default:
+            reset();
+    } 
+}
+
+function action2(ch){
+    switch(ch) {
+        case 'a'.charCodeAt(0):
+            ctrl_a.style.backgroundColor = "red";
+	    text.value += "â";
+            break;
+        case 'A'.charCodeAt(0):
+            ctrl_A.style.backgroundColor = "red";
+	    text.value += "Â";
+            break;
+	    
+        default:
+            reset();
+    } 
+}
+
+
+function KeyCheck1(event){
+  var ch = event.which || event.keyCode;
+
+  if (event.ctrlKey){
+    event.preventDefault();
+    action2(ch);
+  }  
+  else{
+    reset();
+  }
+
+  
+  if (event.altKey){
+    event.preventDefault();
+    action(ch);
+  }  
+  else{
+    reset();
+  }
+  
+}
+
+/*
+   event.shiftKey
+   event.ctrlKey
+   event.altKey
+   event.metaKey
+
+*/
+
+/*
+function KeyCheck0(event){
+  var ch = event.which || event.keyCode;
+  
+  if(event.altKey && ch == 'a'.charCodeAt(0)){
+    event.preventDefault();
+    info1.innerHTML = "Alt+a";
+  }else{
+    info1.innerHTML = "";
+  } 
+}
+*/
+</script>
+
+<html>
